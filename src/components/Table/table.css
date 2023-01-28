@@ -1,0 +1,134 @@
+table {
+  margin: 0 auto;
+  table-layout: fixed;
+  width: 100%;
+  border-collapse: collapse;
+  border-bottom: solid 1px #e5e5e5;
+  border-top: solid 1px #e5e5e5;
+}
+
+thead,
+th {
+  text-align: start;
+}
+
+th span {
+  transition: color 0.1s ease-in;
+  pointer-events: none;
+}
+
+th:hover span {
+  color: red;
+}
+
+th span:hover {
+  color: red;
+}
+
+thead th:nth-child(1) {
+  width: 25%;
+}
+
+thead th:nth-child(2) {
+  width: 30%;
+}
+
+thead th:nth-child(3) {
+  width: 35%;
+}
+
+thead th:nth-child(4) {
+  width: 30%;
+}
+thead th:nth-child(5) {
+  width: 30%;
+}
+thead th:nth-child(6) {
+  width: 25%;
+}
+thead th:nth-child(7) {
+  width: 30%;
+}
+thead th:nth-child(8) {
+  width: 35%;
+}
+thead th:nth-child(9) {
+  width: 20%;
+}
+
+th,
+td {
+  padding: 20px;
+}
+td {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.row-data {
+  transition: background-color 0.1s ease-in;
+}
+
+.row-data:nth-of-type(odd) {
+  background-color: #f7f7f7;
+}
+
+.row-data:hover {
+  background-color: rgb(236, 241, 252);
+}
+
+@media only screen and (max-width: 760px),
+  (min-device-width: 760px) and (max-device-width: 1023px) {
+  table,
+  thead,
+  tbody,
+  th,
+  td,
+  tr {
+    display: block;
+  }
+
+  thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  tr {
+    border: 1px solid #ccc;
+  }
+
+  td {
+    border: none;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    padding-left: 50%;
+  }
+
+  td:before {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+    font-weight: bold;
+  }
+
+  /*
+	Label the data
+	*/
+  td:nth-of-type(1):before {
+    content: 'Date';
+  }
+  td:nth-of-type(2):before {
+    content: 'Time';
+  }
+  td:nth-of-type(3):before {
+    content: 'Price';
+  }
+  td:nth-of-type(4):before {
+    content: 'Quantity';
+  }
+}
