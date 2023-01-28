@@ -2,14 +2,14 @@
 import  axios from 'axios'
 import { useEffect, useState } from 'react';
 
-export const  useFetch = (url: string, symbol: string) => {
+export const  useFetch = (url: string, symbol: string|undefined) => {
     const [data, setData] = useState<any[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
     const config = {
         method: 'get',
-        url: `https://data.binance.com/${url}?symbol=${symbol}`,
+        url: `https://data.binance.com${url}?symbol=${symbol}`,
         // headers: { }
       };
 
@@ -17,7 +17,7 @@ export const  useFetch = (url: string, symbol: string) => {
         //setloading to true
         setLoading(true);
         //make call to the URL to get the data
-        axios(config)
+            axios(config)
           //if response received return set state with the response
           .then((response :any) => {
             setData(response.data);
