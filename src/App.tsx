@@ -3,28 +3,26 @@ import { requests } from './api/requests';
 import { coins } from './coins';
 import { currencies } from './currencies';
 import axios from 'axios';
-import Tabel from './components/Tabel';
+import Table from './components/Table/Table';
 import Ticker from './components/Ticker';
 
 
 
-
 function App() {
-
+  const { fetchTicker, fetchTicker24hr, fetchTrades } = requests;
   const [symbol, setSymbol] = useState("BTCUSDT");
   const [baseAsset, setBaseAsset] = useState("BTC");
   const [currencyPair, setCurrencyPair] = useState("EUR");
   const [tradeData, setTradeData] = useState();
   const [tickerData, setTickerData] = useState();
   const [ticker24Data, setTicker24Data] = useState();
+  const [sortBy, setSortBy] = React.useState<string | undefined>();
 
 
-  const { fetchTicker, fetchExchange, fetchTicker24hr, fetchTrades } = requests;
-
-  useEffect(() => {
-
-  }, [])
-
+  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    // const value = event.target.value
+    setSortBy(event.target.value);
+  }
 
   const handleBaseAssetChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const value = event.target.value;
@@ -52,6 +50,8 @@ function App() {
   }
 
 
+  console.log(sortBy)
+
 
 
   return (
@@ -71,7 +71,7 @@ function App() {
         <button type='submit'>Submit</button>
       </form>
       {tradeData &&
-        <Tabel />}
+        <Table data={tradeData} onChange={handleChange} />}
 
       {tickerData && ticker24Data &&
         <>

@@ -1,3 +1,3 @@
-type currencies = [key: string] 
+type currencies = [key: string]
 
-export const currencies = ["EUR","GBP","USDT","INR"]
+export const currencies = ["EUR", "GBP", "USDT", "INR"]
