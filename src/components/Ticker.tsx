@@ -6,18 +6,20 @@ type TickerProps = {
 }
 
 const Ticker = ({ data }: TickerProps) => {
-    const { closeTime, count, lastPrice, lowPrice, openTime, priceChange } = data
+    const entries = getObjectEntries(data);
 
+    function getObjectEntries<T>(obj: Object): Array<[keyof T, T[keyof T]]> {
+        return Object.entries(obj) as Array<[keyof T, T[keyof T]]>;
+    }
 
     return (
         <div>
             <ul>
-                <li>{closeTime}</li>
-                <li>{count}</li>
-                <li>{lastPrice}</li>
-                <li>{lowPrice}</li>
-                <li>{openTime}</li>
-                <li>{priceChange}</li>
+                {entries.map(([key, value]) => (
+                    <li key={key}>
+                        {key}: {value}
+                    </li>
+                ))}
             </ul>
         </div>
     )
