@@ -16,13 +16,7 @@ function App() {
   const [tradeData, setTradeData] = useState();
   const [tickerData, setTickerData] = useState();
   const [ticker24Data, setTicker24Data] = useState();
-  const [sortBy, setSortBy] = React.useState<string | undefined>();
 
-
-  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    // const value = event.target.value
-    setSortBy(event.target.value);
-  }
 
   const handleBaseAssetChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const value = event.target.value;
@@ -50,7 +44,7 @@ function App() {
   }
 
 
-  console.log(sortBy)
+
 
 
 
@@ -71,7 +65,7 @@ function App() {
         <button type='submit'>Submit</button>
       </form>
       {tradeData &&
-        <Table data={tradeData} onChange={handleChange} />}
+        <Table data={tradeData} />}
 
       {tickerData && ticker24Data &&
         <>
