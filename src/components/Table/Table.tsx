@@ -20,6 +20,17 @@ line-height: inherit;
 const TableTitleDisplay = styled.div`
 display: flex;
 flex-direction: column;
+position: sticky;
+top: -16px; 
+background-color: #6b00d2;
+border-radius: 10px 10px 0  0;
+padding 0  .5em ; 
+
+@media only screen and (max-width: 760px),
+  (min-device-width: 760px) and (max-device-width: 1023px) {
+    position: relative;
+    top: 0;
+  }
 `
 
 type TableProps = {
@@ -42,9 +53,6 @@ const Table = ({ data, }: TableProps) => {
         // const value = event.target.value
         setSortBy(event.target.value);
     }
-
-
-    console.log(sortedData)
 
     return (
         <>

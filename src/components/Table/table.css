@@ -7,6 +7,12 @@ table {
   border-top: solid 1px #e5e5e5;
 }
 
+th {
+  position: sticky;
+  top: 135px;
+  background-color: #6b00d2;
+}
+
 thead,
 th {
   text-align: start;
@@ -89,6 +95,12 @@ td {
     display: block;
   }
 
+  /* th {
+    position: relative;
+    top: 0;
+    background-color: #6b00d2;
+  } */
+
   thead tr {
     position: absolute;
     top: -9999px;
@@ -130,5 +142,8 @@ td {
   }
   td:nth-of-type(4):before {
     content: 'Quantity';
+  }
+  td:nth-of-type(5):before {
+    content: 'Quote Quantity';
   }
 }
