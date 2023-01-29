@@ -71,11 +71,11 @@ td {
 }
 
 .row-data:nth-of-type(odd) {
-  background-color: #f7f7f7;
+  background-color: #6b00d260;
 }
 
 .row-data:hover {
-  background-color: rgb(236, 241, 252);
+  background-color: rgba(107, 0, 210, 0.8);
 }
 
 @media only screen and (max-width: 760px),
