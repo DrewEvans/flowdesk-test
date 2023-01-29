@@ -1,21 +1,29 @@
-import React from 'react'
-import { Moment } from 'moment'
+import React, { useState } from 'react'
 import "./table.css"
 
 type TableProps = {
-    data: any,
-    onChange: (Value: React.ChangeEvent<HTMLSelectElement>) => void
+    data: any
+    // onChange: (Value: React.ChangeEvent<HTMLSelectElement>) => void
 }
 
-const Table = ({ data, onChange }: TableProps) => {
+const Table = ({ data, }: TableProps) => {
 
     let moment = require("moment")
 
-    // console.log(data)
+    const [sortBy, setSortBy] = React.useState<string | undefined>();
+
+
+    const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        // const value = event.target.value
+        setSortBy(event.target.value);
+    }
+
+    console.log(sortBy)
+
     return (
         <>
             <div>
-                <select onChange={onChange}>
+                <select onChange={handleChange}>
                     <option value="time">Time</option>
                     <option value="price">Price</option>
                     <option value="quanity">Quantity</option>
@@ -23,7 +31,6 @@ const Table = ({ data, onChange }: TableProps) => {
             </div>
 
             <table>
-
                 <thead>
                     <tr>
                         <th>Date</th>
@@ -41,7 +48,7 @@ const Table = ({ data, onChange }: TableProps) => {
                         return (
                             <tr>
                                 <td>{moment(time).format("DD/MM/YYYY")}</td>
-                                <td>{moment(time).format("SS:MM:HH")}</td>
+                                <td>{moment(time).format("LTS")}</td>
                                 <td>{parseFloat(price)}</td>
                                 <td>{parseFloat(quoteQty).toFixed(0)}</td>
                             </tr>
