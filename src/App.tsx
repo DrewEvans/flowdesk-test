@@ -31,6 +31,7 @@ background-color: black;
 padding-left: 100%;
 box-sizing: content-box;
 `
+
 const TickerWrapper24HR = styled.div`
 position: fixed;
 bottom: 0;
@@ -56,7 +57,6 @@ font-family: "poppins", serif;
 const Title = styled.h1`
 margin: 0;
 margin-top: 3%;
-
 `
 
 const SelectContainer = styled.div`
@@ -85,7 +85,6 @@ cursor: inherit;
 line-height: inherit;
 `;
 
-
 const Button = styled.button`
 background-color: #fff;
 font-size: 1.3em;
@@ -105,13 +104,11 @@ flex-direction: column;
 
 function App() {
   const { fetchTicker, fetchTicker24hr, fetchTrades } = requests;
-  const [symbol, setSymbol] = useState("BTCUSDT");
   const [baseAsset, setBaseAsset] = useState("BTC");
   const [currencyPair, setCurrencyPair] = useState("EUR");
   const [tradeData, setTradeData] = useState();
   const [tickerData, setTickerData] = useState();
   const [ticker24Data, setTicker24Data] = useState();
-
 
   const handleBaseAssetChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const value = event.target.value;
@@ -125,17 +122,18 @@ function App() {
 
   const onSubmit = (event: React.SyntheticEvent) => {
     event.preventDefault();
-    setSymbol(baseAsset + currencyPair)
 
-    axios.get(`https://data.binance.com${fetchTrades}?symbol=${symbol}`).then((response) => {
-      setTradeData(response.data);
-    })
-    axios.get(`https://data.binance.com${fetchTicker}?symbol=${symbol}`).then((response) => {
-      setTickerData(response.data);
-    })
-    axios.get(`https://data.binance.com${fetchTicker24hr}?symbol=${symbol}`).then((response) => {
-      setTicker24Data(response.data);
-    })
+    if (baseAsset && currencyPair) {
+      axios.get(`https://data.binance.com${fetchTrades}?symbol=${baseAsset + currencyPair}`).then((response) => {
+        setTradeData(response.data);
+      })
+      axios.get(`https://data.binance.com${fetchTicker}?symbol=${baseAsset + currencyPair}`).then((response) => {
+        setTickerData(response.data);
+      })
+      axios.get(`https://data.binance.com${fetchTicker24hr}?symbol=${baseAsset + currencyPair}`).then((response) => {
+        setTicker24Data(response.data);
+      })
+    }
   }
 
   return (
