@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { sortArray } from '../../helpers/sortArray'
 import "./table.css"
 
 type TableProps = {
@@ -9,8 +10,12 @@ type TableProps = {
 const Table = ({ data, }: TableProps) => {
 
     let moment = require("moment")
+    const [sortedData, setSortedData] = React.useState<any>()
+    const [sortBy, setSortBy] = React.useState<string>("time");
 
-    const [sortBy, setSortBy] = React.useState<string | undefined>();
+    useEffect(() => {
+        setSortedData(sortArray(sortBy, data, "desc"))
+    }, [sortBy, data])
 
 
     const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -18,7 +23,8 @@ const Table = ({ data, }: TableProps) => {
         setSortBy(event.target.value);
     }
 
-    console.log(sortBy)
+
+    console.log(sortedData)
 
     return (
         <>
@@ -26,7 +32,8 @@ const Table = ({ data, }: TableProps) => {
                 <select onChange={handleChange}>
                     <option value="time">Time</option>
                     <option value="price">Price</option>
-                    <option value="quanity">Quantity</option>
+                    <option value="qty">Quantity</option>
+                    <option value="quoteQty">Quote Quantity</option>
                 </select>
             </div>
 
@@ -37,23 +44,26 @@ const Table = ({ data, }: TableProps) => {
                         <th>Time</th>
                         <th>Price</th>
                         <th>Quantity</th>
+                        <th>Quote Quantity</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {data.map((rows: any) => {
-                        const { time, price, quoteQty } = rows
+                    {sortedData &&
+                        sortedData.map((rows: any) => {
+                            const { time, price, quoteQty, qty } = rows
 
-                        console.log()
+                            console.log()
 
-                        return (
-                            <tr>
-                                <td>{moment(time).format("DD/MM/YYYY")}</td>
-                                <td>{moment(time).format("LTS")}</td>
-                                <td>{parseFloat(price)}</td>
-                                <td>{parseFloat(quoteQty).toFixed(0)}</td>
-                            </tr>
-                        )
-                    })}
+                            return (
+                                <tr>
+                                    <td>{moment(time).format("DD/MM/YYYY")}</td>
+                                    <td>{moment(time).format("LTS")}</td>
+                                    <td>{parseFloat(price)}</td>
+                                    <td>{qty}</td>
+                                    <td>{parseFloat(quoteQty).toFixed(2)}</td>
+                                </tr>
+                            )
+                        })}
                 </tbody>
             </table>
         </>
