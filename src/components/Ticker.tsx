@@ -32,7 +32,8 @@ const TickerItem = styled.div`
 display: inline-block;
 padding: 0 2rem;
 font-size: 1.5rem;
-color: white;  
+color: white;
+text-transform: capitalize;
 `
 
 type TickerProps = {
@@ -54,7 +55,7 @@ const Ticker = ({ data }: TickerProps) => {
         <TickerContainer>
             {entries.map(({ key, value }) => (
                 <TickerItem key={key + data.firstId}>
-                    {key}: {value}
+                    {key.replace(/([A-Z])/g, ' $1')}: {value}
                 </TickerItem>
             ))}
         </TickerContainer>
