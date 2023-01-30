@@ -84,11 +84,11 @@ const Table = ({ data, }: TableProps) => {
                 </thead>
                 <tbody>
                     {sortedData &&
-                        sortedData.map((rows: TradeData) => {
+                        sortedData.map((rows: TradeData, i: number) => {
                             const { time, price, quoteQty, qty } = rows
 
                             return (
-                                <tr className='row-data'>
+                                <tr key={`rowData-${i}`} className='row-data'>
                                     <td>{moment(time).format("DD/MM/YYYY")}</td>
                                     <td>{moment(time).format("LTS")}</td>
                                     <td>{parseFloat(price)}</td>
