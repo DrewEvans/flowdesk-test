@@ -110,7 +110,7 @@ function App() {
   const [tickerData, setTickerData] = useState();
   const [ticker24Data, setTicker24Data] = useState();
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState("");
+  const [loading, setLoading] = React.useState<boolean>(false);
 
   const handleBaseAssetChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const value = event.target.value;
@@ -126,16 +126,21 @@ function App() {
     event.preventDefault();
 
     if (baseAsset && currencyPair) {
+      setLoading(true);
 
-      axios.get(`https://data.binance.com${fetchTrades}?symbol=${baseAsset + currencyPair}`).then((response) => {
-        setTradeData(response.data);
-      })
-      axios.get(`https://data.binance.com${fetchTicker}?symbol=${baseAsset + currencyPair}`).then((response) => {
-        setTickerData(response.data);
-      })
-      axios.get(`https://data.binance.com${fetchTicker24hr}?symbol=${baseAsset + currencyPair}`).then((response) => {
-        setTicker24Data(response.data);
-      })
+      Promise.all([
+        axios.get(`https://data.binance.com${fetchTrades}?symbol=${baseAsset + currencyPair}`),
+        axios.get(`https://data.binance.com${fetchTicker}?symbol=${baseAsset + currencyPair}`),
+        axios.get(`https://data.binance.com${fetchTicker24hr}?symbol=${baseAsset + currencyPair}`)
+      ]).then(([tradeResponse, tickerResponse, ticker24Response]) => {
+        setTradeData(tradeResponse.data);
+        setTickerData(tickerResponse.data);
+        setTicker24Data(ticker24Response.data);
+        setLoading(false);
+      }).catch(error => {
+        setError(error);
+        setLoading(false);
+      });
     }
   }
 
@@ -163,26 +168,19 @@ function App() {
         </SelectContainer>
         <Button type='submit'>Submit</Button>
       </FormContainer>
-      {tradeData && tickerData ? <>
-        {tradeData &&
+      {!loading && tradeData && tickerData ?
+        <>
           <TableContainer>
             <Table data={tradeData} />
           </TableContainer>
-        }
-        {tickerData && ticker24Data &&
-          <>
-            <TickerWrapper>
-              <Ticker data={tickerData} />
-            </TickerWrapper>
-            <TickerWrapper24HR>
-              <Ticker data={ticker24Data} />
-            </TickerWrapper24HR>
-          </>
-        }</> :
-        <h2>Please Select Your trading Pairs</h2>
+          <TickerWrapper24HR>
+            <Ticker data={ticker24Data} />
+          </TickerWrapper24HR>
+        </>
+        :
+        (!tradeData && !tradeData ? <h2>Please Select Your Trading pairs</h2> : <h2>...Loading</h2>)
       }
-    </Main>
-
+    </Main >
   );
 }
 
