@@ -109,6 +109,8 @@ function App() {
   const [tradeData, setTradeData] = useState();
   const [tickerData, setTickerData] = useState();
   const [ticker24Data, setTicker24Data] = useState();
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState("");
 
   const handleBaseAssetChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const value = event.target.value;
@@ -124,6 +126,7 @@ function App() {
     event.preventDefault();
 
     if (baseAsset && currencyPair) {
+
       axios.get(`https://data.binance.com${fetchTrades}?symbol=${baseAsset + currencyPair}`).then((response) => {
         setTradeData(response.data);
       })
@@ -144,37 +147,39 @@ function App() {
           <SelectGroup>
             <label>Crypto Currency</label>
             <Select onChange={handleBaseAssetChange}>
-              {coins.map((coin) => {
-                return <option value={coin}>{coin}</option>
+              {coins.map((coin, i) => {
+                return <option key={`${coin}-${i}`} value={coin}>{coin}</option>
               })}
             </Select>
           </SelectGroup>
           <SelectGroup>
             <label>Fiat Currency</label>
             <Select onChange={handleCurrencyPairChange}>
-              {currencies.map((currency) => {
-                return <option onChange={(e) => console.log(e)} value={currency}>{currency}</option>
+              {currencies.map((currency, i) => {
+                return <option key={`${currency}-${i}`} onChange={(e) => console.log(e)} value={currency}>{currency}</option>
               })}
             </Select>
           </SelectGroup>
         </SelectContainer>
         <Button type='submit'>Submit</Button>
       </FormContainer>
-
-      {tradeData &&
-        <TableContainer>
-          <Table data={tradeData} />
-        </TableContainer>
-      }
-      {tickerData && ticker24Data &&
-        <>
-          <TickerWrapper>
-            <Ticker data={tickerData} />
-          </TickerWrapper>
-          <TickerWrapper24HR>
-            <Ticker data={ticker24Data} />
-          </TickerWrapper24HR>
-        </>
+      {tradeData && tickerData ? <>
+        {tradeData &&
+          <TableContainer>
+            <Table data={tradeData} />
+          </TableContainer>
+        }
+        {tickerData && ticker24Data &&
+          <>
+            <TickerWrapper>
+              <Ticker data={tickerData} />
+            </TickerWrapper>
+            <TickerWrapper24HR>
+              <Ticker data={ticker24Data} />
+            </TickerWrapper24HR>
+          </>
+        }</> :
+        <h2>Please Select Your trading Pairs</h2>
       }
     </Main>
 
