@@ -40,25 +40,24 @@ type TickerProps = {
     // onChange: (Value: React.ChangeEvent<HTMLSelectElement>) => void
 }
 
+interface TickerData {
+    key: string;
+    value: any;
+}
+
 const Ticker = ({ data }: TickerProps) => {
     useEffect(() => { console.log("Refreshed") }, [data])
 
-    const entries = getObjectEntries(data);
-
-    function getObjectEntries<T>(obj: Object): Array<[keyof T, T[keyof T]]> {
-        return Object.entries(obj) as Array<[keyof T, T[keyof T]]>;
-    }
+    const entries: TickerData[] = Object.entries(data).map(([key, value]) => ({ key, value }));
 
     return (
-
         <TickerContainer>
-            {entries.map(([key, value]) => (
-                <TickerItem key={key}>
+            {entries.map(({ key, value }) => (
+                <TickerItem key={key + data.firstId}>
                     {key}: {value}
                 </TickerItem>
             ))}
         </TickerContainer>
-
     )
 }
 
