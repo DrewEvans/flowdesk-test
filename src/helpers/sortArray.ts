@@ -9,19 +9,12 @@ export function sortArray<T>(type: unknown, data: T[], sortDirection: 'asc' | 'd
         case 'time':
           compareFn = (a: any, b: any) => a - b;
           break;
-        case 'qty':
-          compareFn = (a: any, b: any) => a - b;
-          break;
         case 'quoteQty':
           compareFn = (a: any, b: any) => a - b;
           break;
-        // case 'qty':
-        //   compareFn = (a, b) => {
-        //     if (a < b) return -1;
-        //     if (a > b) return 1;
-        //     return 0;
-        //   };
-        //   break;
+        case 'qty':
+          compareFn = (a: any, b: any) => a - b;
+          break;
         default:
           return data;
       }
