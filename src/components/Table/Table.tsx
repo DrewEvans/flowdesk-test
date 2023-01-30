@@ -50,7 +50,6 @@ const Table = ({ data, }: TableProps) => {
 
 
     const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        // const value = event.target.value
         setSortBy(event.target.value);
     }
 
