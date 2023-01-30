@@ -33,9 +33,15 @@ padding 0  .5em ;
   }
 `
 
-type TableProps = {
-    data: any
-    // onChange: (Value: React.ChangeEvent<HTMLSelectElement>) => void
+interface TradeData {
+    time: string;
+    price: string;
+    qty: number;
+    quoteQty: string;
+}
+
+interface TableProps {
+    data: TradeData[];
 }
 
 const Table = ({ data, }: TableProps) => {
@@ -78,7 +84,7 @@ const Table = ({ data, }: TableProps) => {
                 </thead>
                 <tbody>
                     {sortedData &&
-                        sortedData.map((rows: any) => {
+                        sortedData.map((rows: TradeData) => {
                             const { time, price, quoteQty, qty } = rows
 
                             return (
