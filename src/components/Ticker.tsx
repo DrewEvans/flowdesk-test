@@ -54,7 +54,7 @@ const Ticker = ({ data }: TickerProps) => {
         <TickerContainer>
             {entries.map(([key, value]) => (
                 <TickerItem key={key}>
-                    {key}: {typeof value === "string" ? parseFloat(value).toFixed(2) : value}
+                    {key}: {value}
                 </TickerItem>
             ))}
         </TickerContainer>
