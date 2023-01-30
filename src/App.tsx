@@ -145,7 +145,9 @@ function App() {
     }
   }
 
-  console.log(error)
+  /**
+   * todo: add function to get request new ticker data every 60s 
+   */
 
   return (
     <Main>

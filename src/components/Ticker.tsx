@@ -38,7 +38,6 @@ text-transform: capitalize;
 
 type TickerProps = {
     data: any
-    // onChange: (Value: React.ChangeEvent<HTMLSelectElement>) => void
 }
 
 interface TickerData {
@@ -47,9 +46,13 @@ interface TickerData {
 }
 
 const Ticker = ({ data }: TickerProps) => {
-    useEffect(() => { console.log("Refreshed") }, [data])
+    useEffect(() => { }, [data])
 
     const entries: TickerData[] = Object.entries(data).map(([key, value]) => ({ key, value }));
+
+    /**
+     * todo: update Values to represent metrics correctly
+     */
 
     return (
         <TickerContainer>
