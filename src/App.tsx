@@ -109,7 +109,7 @@ function App() {
   const [tradeData, setTradeData] = useState();
   const [tickerData, setTickerData] = useState();
   const [ticker24Data, setTicker24Data] = useState();
-  const [error, setError] = useState("");
+  const [error, setError] = React.useState<boolean | string>("");
   const [loading, setLoading] = React.useState<boolean>(false);
 
   const handleBaseAssetChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -127,6 +127,7 @@ function App() {
 
     if (baseAsset && currencyPair) {
       setLoading(true);
+      setError(false)
 
       Promise.all([
         axios.get(`https://data.binance.com${fetchTrades}?symbol=${baseAsset + currencyPair}`),
@@ -143,6 +144,8 @@ function App() {
       });
     }
   }
+
+  console.log(error)
 
   return (
     <Main>
@@ -168,18 +171,14 @@ function App() {
         </SelectContainer>
         <Button type='submit'>Submit</Button>
       </FormContainer>
-      {!loading && tradeData && tickerData ?
-        <>
-          <TableContainer>
-            <Table data={tradeData} />
-          </TableContainer>
-          <TickerWrapper24HR>
-            <Ticker data={ticker24Data} />
-          </TickerWrapper24HR>
-        </>
-        :
-        (!tradeData && !tradeData ? <h2>Please Select Your Trading pairs</h2> : <h2>...Loading</h2>)
-      }
+      {!loading ? error ? <h2>Error has Occurred: please try again or select a valid Trading pair</h2> : tradeData && tickerData ? <>
+        <TableContainer>
+          <Table data={tradeData} />
+        </TableContainer>
+        <TickerWrapper24HR>
+          <Ticker data={ticker24Data} />
+        </TickerWrapper24HR>
+      </> : <h2>Please Select Your Trading pairs</h2> : <h2>...Loading</h2>}
     </Main >
   );
 }
